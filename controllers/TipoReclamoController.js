@@ -5,8 +5,6 @@ const TipoReclamoController = {
     crearTipoReclamo: async (req, res) => {
         try {
             const { nombre } = req.body
-            const usuarioLogueado = await Usuario.findByPk(req.user.id)
-            if (usuarioLogueado.rol != 1) { return res.status(403).json({ message: 'No estás autorizado a realizar esta acción' }) }
             if (!nombre) { return res.status(401).json({ message: 'El nombre es requerido' }) }
             await TipoReclamo.create({ nombre })
             return res.status(201).json({ message: 'Tipo de reclamo creado satisfactoriamente' })

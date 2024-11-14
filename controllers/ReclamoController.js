@@ -6,9 +6,7 @@ const ReclamoController = {
         try {
             const {dni, nombre, email, celular, domicilio,entre_calles, observaciones, idTipoReclamo} = req.body
             if(!dni || !nombre || !domicilio){ return res.status(400).json({message: 'Los campos dni, nombre y domicilio son requeridos'})}
-            const idUsuario = req.user.id
-            console.log(req.user.id);
-            const data = {dni, nombre, email, celular, domicilio,entre_calles, observaciones, idTipoReclamo, idUsuario}
+            const data = {dni, nombre, email, celular, domicilio,entre_calles, observaciones, idTipoReclamo}
             const reclamo = await Reclamo.create(data)
             return res.status(201).json({message: 'Reclamo creado con éxito', reclamo})
         } catch (error) {
@@ -20,10 +18,11 @@ const ReclamoController = {
             const reclamos = await Reclamo.findAll({
                 include: {
                     model: TipoReclamos,
+                    as: 'tipoReclamo', // Alias de la relación
                     attributes: ['nombre']
                 }
-            })
-            return res.status(200).json({reclamos})
+            });
+            return res.status(200).json({ reclamos });
         } catch (error) {
             return res.status(500).json({message: error.message})
         }

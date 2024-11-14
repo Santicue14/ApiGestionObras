@@ -53,12 +53,14 @@ const Reclamo = sequelize.define('Reclamo', {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0
-  }
-}, {
+  },
+},
+ {
   tableName: 'Reclamo',
   timestamps: false
 });
 
-Reclamo.belongsTo(TipoReclamos, { foreignKey: 'idTipoReclamo' });
-
+Reclamo.associate = (models) => {
+  Reclamo.belongsTo(models.TipoReclamos, { foreignKey: 'idTipoReclamo', as: 'tipoReclamo' });
+};
 module.exports = Reclamo;

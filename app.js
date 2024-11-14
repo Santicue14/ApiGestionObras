@@ -7,7 +7,6 @@ const UsuariosRoutes = require('./routes/UserRoutes');
 const AuthRoutes = require('./routes/AuthRoutes');
 const TipoReclamoRoutes = require('./routes/TipoReclamoRoutes')
 const ReclamoRoutes = require('./routes/ReclamoRoutes')
-const authenticateToken = require('./middlewares/authenticateToken');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,9 +19,9 @@ app.use(cors({
   }));
 
 app.use('/api/auth',AuthRoutes)
-app.use('/api/usuarios',authenticateToken,UsuariosRoutes)
-app.use('/api/reclamos',authenticateToken,ReclamoRoutes)
-app.use('/api/tiporeclamos',authenticateToken,TipoReclamoRoutes)
+app.use('/api/usuarios',UsuariosRoutes)
+app.use('/api/reclamos',ReclamoRoutes)
+app.use('/api/tiporeclamos',TipoReclamoRoutes)
 
 sequelize.authenticate()
   .then(() => {

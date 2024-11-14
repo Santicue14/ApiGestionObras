@@ -1,6 +1,7 @@
 // models/TipoReclamos.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Ajusta la ruta según tu configuración
+const sequelize = require('../config/database');
+const Reclamo = require('./Reclamo'); // Ajusta la ruta si es necesario
 
 const TipoReclamos = sequelize.define('TipoReclamos', {
   idTipoReclamos: {
@@ -18,7 +19,11 @@ const TipoReclamos = sequelize.define('TipoReclamos', {
   }
 }, {
   tableName: 'TipoReclamos',
-  timestamps: false,
+  timestamps: false
 });
+
+// Configura la relación con Reclamo
+TipoReclamos.hasMany(Reclamo, { foreignKey: 'idTipoReclamo', as: 'reclamos' });
+Reclamo.belongsTo(TipoReclamos, { foreignKey: 'idTipoReclamo', as: 'tipoReclamo' });
 
 module.exports = TipoReclamos;
